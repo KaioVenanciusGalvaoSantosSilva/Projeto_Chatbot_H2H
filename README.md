@@ -1,6 +1,10 @@
 "# Projeto_Chatbot_H2H"
-# adicione o código abaixo ao seu site e digite no chat algo como: "oi, esqueci a senha" e veja um exemplo de uma das funcionalidades e poder que a Watson pode prover para seu negócio.
-
+#Passo-a-Passo
+#1° Copie o código abaixo
+#2° Cole no código do seu site HTML
+#3° Teste algo como "oi, esqueci a senha"
+# Veja um exemplo de solução de problemas e poder que a Watson pode prover para seu negócio.
+----------------------------------------------------------------------------
 <script>
   window.watsonAssistantChatOptions = {
       integrationID: "284aa4c8-fa72-40dc-9fdf-9cd02114be2a", // The ID of this integration.
@@ -14,3 +18,4 @@
     document.head.appendChild(t);
   });
 </script>
+----------------------------------------------------------------------------
