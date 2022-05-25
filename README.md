@@ -1,8 +1,8 @@
-"# Projeto_Chatbot_H2H"
-#Passo-a-Passo </br>
-#1° Copie o código abaixo</br>
-#2° Cole no código do seu site HTML
-#3° Teste algo como "oi, esqueci a senha</br>
+# Projeto_Chatbot_H2H
+Passo-a-Passo </br>
+1° Copie o código abaixo</br>
+2° Cole no código do seu site HTML
+3° Teste algo como "oi, esqueci a senha</br>
 # Veja um exemplo de solução de problemas e poder que a Watson pode prover para seu negócio.
 ----------------------------------------------------------------------------
 <script>
