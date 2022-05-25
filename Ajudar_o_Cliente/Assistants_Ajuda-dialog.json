@@ -1,0 +1,528 @@
+{
+  "intents": [
+    {
+      "intent": "esqueci-senha",
+      "examples": [
+        {
+          "text": "a senha não entra"
+        },
+        {
+          "text": "esqueci a minha senha"
+        },
+        {
+          "text": "esqueci a senha"
+        },
+        {
+          "text": "quero redefinir minha senha"
+        },
+        {
+          "text": "quero resetar a minha senha"
+        },
+        {
+          "text": "redefinir senha"
+        },
+        {
+          "text": "resetar senha"
+        }
+      ],
+      "description": "Usuário esqueceu a senha"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "encerrar",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Continuar atendimento",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Encerrar atendimento",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "segurança",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "dois fatores",
+          "synonyms": [
+            "codigo",
+            "código ",
+            "fatores"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "duas etapas",
+          "synonyms": [
+            "etapas",
+            "por email"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "validar",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "não",
+          "synonyms": [
+            "nao",
+            "não estou",
+            "nem estou",
+            "sem"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "sim",
+          "synonyms": [
+            "estou com",
+            "estou sim",
+            "Sim"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "webhooks": [
+    {
+      "url": "",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Bem-vindo",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Seja bem-vindo ao suporte especializado, como posso ajudar?"
+              },
+              {
+                "text": "Fico feliz que tenha entrado em contato, me diga o que posso ajudar?"
+              },
+              {
+                "text": "Sou especialista em suporte, em que posso ajudar?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_7_1602013579238"
+      },
+      "conditions": "welcome",
+      "dialog_node": "Bem-vindo"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1602013037554",
+      "context": {
+        "seguranca": "@segurança"
+      },
+      "conditions": "@segurança",
+      "event_name": "input",
+      "dialog_node": "handler_10_1602013037566"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Você esta com algum dispositivo próximo?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_7_1602013140463",
+      "event_name": "focus",
+      "dialog_node": "handler_10_1602013140502",
+      "previous_sibling": "handler_3_1602013140502"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_8_1602012852743",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1602012873258",
+      "previous_sibling": "slot_7_1602013140463"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1602013140463",
+      "context": {
+        "validar": "@validar"
+      },
+      "conditions": "@validar",
+      "event_name": "input",
+      "dialog_node": "handler_3_1602013140502"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Qual o tipo de segurança da sua conta?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_3_1602013037554",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1602013037566",
+      "previous_sibling": "handler_10_1602013037566"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Entendo. Será bem simples de recuperar."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_3_1602013037554",
+      "conditions": "@segurança:(duas etapas)",
+      "event_name": "filled",
+      "dialog_node": "handler_4_1602013097181",
+      "previous_sibling": "handler_5_1602013072468"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "É de fato o melhor tipo de segurança na sua conta."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_3_1602013037554",
+      "conditions": "@segurança:(dois fatores)",
+      "event_name": "filled",
+      "dialog_node": "handler_5_1602013072468",
+      "previous_sibling": "handler_4_1602013037566"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Seu dispositivo é a melhor forma de recuperar o acesso a sua conta. Estou te passando um link que explica exatamente como recuperar sua conta: https://support.apple.com/pt-br/HT201487 "
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_7_1602013140463",
+      "conditions": "@validar:sim",
+      "event_name": "filled",
+      "dialog_node": "handler_6_1602013192201",
+      "previous_sibling": "handler_10_1602013140502"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Não tem problema. Assim que estiver com seu dispositivo, recomendo que veja esse artigo, é bem intuitivo, ele explica exatamente como recuperar o acesso a sua senha: https://support.apple.com/pt-br/HT201487"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_7_1602013140463",
+      "conditions": "@validar:não",
+      "event_name": "filled",
+      "dialog_node": "handler_9_1602013272391",
+      "previous_sibling": "handler_6_1602013192201"
+    },
+    {
+      "type": "standard",
+      "title": "Encerrar",
+      "parent": "node_6_1602014212556",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@encerrar",
+      "dialog_node": "node_3_1602014295867"
+    },
+    {
+      "type": "folder",
+      "title": "Problemas",
+      "dialog_node": "node_4_1602014862018",
+      "previous_sibling": "Bem-vindo"
+    },
+    {
+      "type": "folder",
+      "title": "Encerrar",
+      "dialog_node": "node_5_1602014794202",
+      "previous_sibling": "node_4_1602014862018"
+    },
+    {
+      "type": "standard",
+      "title": "Pergunta",
+      "output": {
+        "generic": [
+          {
+            "title": "Tem algo a mais que possa te ajudar?",
+            "options": [
+              {
+                "label": "Sim",
+                "value": {
+                  "input": {
+                    "text": "Continuar atendimento"
+                  }
+                }
+              },
+              {
+                "label": "Não",
+                "value": {
+                  "input": {
+                    "text": "Encerrar atendimento"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_5_1602014794202",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_3_1602014295867"
+      },
+      "dialog_node": "node_6_1602014212556"
+    },
+    {
+      "type": "standard",
+      "title": "Pausa",
+      "output": {
+        "generic": [
+          {
+            "time": 5000,
+            "typing": true,
+            "response_type": "pause"
+          }
+        ]
+      },
+      "parent": "node_8_1602013907469",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_8_1602013381976"
+      },
+      "conditions": "#esqueci-senha",
+      "dialog_node": "node_7_1602013579238"
+    },
+    {
+      "type": "frame",
+      "title": "Esqueceu senha",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_9_1602012785353",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_6_1602014212556"
+      },
+      "conditions": "#esqueci-senha",
+      "dialog_node": "node_8_1602012852743"
+    },
+    {
+      "type": "standard",
+      "title": "H2h",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "É totalmente normal esquecermos as senhas, ainda mais nos dias de hoje, que temos que lembrar de diversas senhas que temos. "
+              },
+              {
+                "text": "Compreendo, isso é normal, acontece com todo mundo."
+              },
+              {
+                "text": "É totalmente normal, todos esquecemos a senha algumas vezes."
+              },
+              {
+                "text": "Você não vai acreditar, mas isso já aconteceu comigo. Acaba sendo bem comum ainda mais quando temos várias senhas."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602013907469",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_9_1602012785353"
+      },
+      "conditions": "#esqueci-senha",
+      "dialog_node": "node_8_1602013381976",
+      "previous_sibling": "node_7_1602013579238"
+    },
+    {
+      "type": "folder",
+      "title": "Esqueceu a senha",
+      "parent": "node_4_1602014862018",
+      "dialog_node": "node_8_1602013907469"
+    },
+    {
+      "type": "standard",
+      "title": "Fim",
+      "output": {
+        "generic": [
+          {
+            "time": 0,
+            "typing": false,
+            "response_type": "pause"
+          }
+        ]
+      },
+      "parent": "node_5_1602014794202",
+      "dialog_node": "node_8_1602014653167",
+      "previous_sibling": "node_6_1602014212556"
+    },
+    {
+      "type": "standard",
+      "title": "Pausa",
+      "output": {
+        "generic": [
+          {
+            "time": 2000,
+            "typing": true,
+            "response_type": "pause"
+          }
+        ]
+      },
+      "parent": "node_8_1602013907469",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_8_1602012852743"
+      },
+      "dialog_node": "node_9_1602012785353",
+      "previous_sibling": "node_8_1602013381976"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Caso seu problema persista entre em contato: 4002-8922."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1602014295867",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_8_1602014653167"
+      },
+      "conditions": "@encerrar:(Continuar atendimento)",
+      "dialog_node": "response_5_1602014417581"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Obrigado por entrar em contato. A empresa agradece. Tenha um ótimo dia."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1602014295867",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_8_1602014653167"
+      },
+      "conditions": "@encerrar:(Encerrar atendimento)",
+      "dialog_node": "response_6_1602014451972",
+      "previous_sibling": "response_5_1602014417581"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_8_1602012852743",
+      "variable": "$seguranca",
+      "dialog_node": "slot_3_1602013037554"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_8_1602012852743",
+      "variable": "$validar",
+      "dialog_node": "slot_7_1602013140463",
+      "previous_sibling": "slot_3_1602013037554"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Você quis dizer:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "Nenhuma das anteriores"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Você quis dizer:"
+    }
+  },
+  "learning_opt_out": false,
+  "name": "Ajuda",
+  "language": "pt-br",
+  "description": "ajuda pessoas com esquecimento de senha"
+}
