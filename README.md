@@ -1,5 +1,5 @@
 "# Projeto_Chatbot_H2H"
-# adicione ao seu site e teste algo como: "oi, esqueci a senha" e veja um exemplo de uma das funcionalidades e poder que a Watson pode prover para seu negócio.
+# adicione o código abaixo ao seu site e digite no chat algo como: "oi, esqueci a senha" e veja um exemplo de uma das funcionalidades e poder que a Watson pode prover para seu negócio.
 
 <script>
   window.watsonAssistantChatOptions = {
